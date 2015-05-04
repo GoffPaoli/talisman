@@ -11,8 +11,8 @@ public final class HandshakePacketParser implements PacketEncoder<HandshakePacke
 
 	@Override
 	public HandshakePacket encode(PacketMessage message) {
-		PacketReader in = PacketReader.get(message);
-		int nameHash = in.readUnsignedByte();
+		PacketReader reader = PacketReader.get(message);
+		int nameHash = reader.readUnsignedByte();
 		return HandshakePacket.get(nameHash);
 	}
 

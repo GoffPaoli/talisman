@@ -8,12 +8,12 @@ public final class RS317Decoder implements PacketMessageDecoder {
 
 	@Override
 	public PacketMessage decode(byte[] data) {
-		PacketReader in = PacketReader.get(data);
+		PacketReader reader = PacketReader.get(data);
 
-		int id = in.readUnsignedByte();
-		int length = in.available();
+		int id = reader.readUnsignedByte();
+		int length = reader.available();
 		byte[] packetData = new byte[length];
-		in.read(packetData, 0, length);
+		reader.read(packetData, 0, length);
 
 		return PacketMessage.get(packetData, id);
 	}

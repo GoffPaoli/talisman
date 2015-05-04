@@ -11,26 +11,26 @@ public final class LoginPacketParser implements PacketEncoder<LoginPacket> {
 
 	@Override
 	public LoginPacket encode(PacketMessage message) {
-		PacketReader in = PacketReader.get(message);
+		PacketReader reader = PacketReader.get(message);
 
-		int magic = in.readUnsignedByte();
-		int clientVersion = in.readUnsignedShort();
-		boolean highDetail = in.read() == 1;
+		int magic = reader.readUnsignedByte();
+		int clientVersion = reader.readUnsignedShort();
+		boolean highDetail = reader.read() == 1;
 
 		int[] fileChecksums = new int[9];
 		for (int i = 0; i < fileChecksums.length; i++)
-			fileChecksums[i] = in.readInteger();
+			fileChecksums[i] = reader.readInteger();
 
-		int blockLength = in.readUnsignedByte();
-		int blockID = in.readUnsignedByte();
+		int blockLength = reader.readUnsignedByte();
+		int blockID = reader.readUnsignedByte();
 
 		int[] sessionKeys = new int[4];
 		for (int i = 0; i < sessionKeys.length; i++)
-			sessionKeys[i] = in.readInteger();
+			sessionKeys[i] = reader.readInteger();
 
-		int userID = in.readInteger();
-		String username = in.readString();
-		String password = in.readString();
+		int userID = reader.readInteger();
+		String username = reader.readString();
+		String password = reader.readString();
 
 		return LoginPacket.get(magic, clientVersion, highDetail, fileChecksums, blockLength, blockID, sessionKeys,
 				userID, username, password);
