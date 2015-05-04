@@ -1,5 +1,7 @@
 package talisman.packet.rs317;
 
+import talisman.packet.rs317.decode.RS317PacketMessageDecoder;
+import talisman.packet.rs317.encode.RS317PacketMessageEncoder;
 import essence.inject.Scopes;
 import essence.packet.PacketMessageDecoder;
 import essence.packet.PacketMessageEncoder;
@@ -11,8 +13,8 @@ public final class RS317Plugin extends AbstractPlugin {
 
 	@Override
 	public void configure() {
-		bind(PacketMessageEncoder.class).to(RS317Encoder.class).in(Scopes.SINGLETON);
-		bind(PacketMessageDecoder.class).to(RS317Decoder.class).in(Scopes.SINGLETON);
+		bind(PacketMessageEncoder.class).to(RS317PacketMessageEncoder.class).in(Scopes.SINGLETON);
+		bind(PacketMessageDecoder.class).to(RS317PacketMessageDecoder.class).in(Scopes.SINGLETON);
 	}
 
 }

@@ -1,4 +1,4 @@
-package talisman.packet.rs317.build;
+package talisman.packet.rs317.decode;
 
 import essence.packet.DecodesPacket;
 import essence.packet.PacketDecoder;
@@ -7,7 +7,7 @@ import essence.packet.PacketWriter;
 import essence.packet.game.MapRegionPacket;
 
 @DecodesPacket(MapRegionPacket.class)
-public final class MapRegionPacketBuilder implements PacketDecoder<MapRegionPacket> {
+public final class MapRegionPacketDecoder implements PacketDecoder<MapRegionPacket> {
 
 	private static final int PACKET_ID = 73;
 

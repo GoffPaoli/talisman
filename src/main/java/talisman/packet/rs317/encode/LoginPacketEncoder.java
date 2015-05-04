@@ -1,4 +1,4 @@
-package talisman.packet.rs317.parse;
+package talisman.packet.rs317.encode;
 
 import essence.packet.EncodesPacket;
 import essence.packet.PacketEncoder;
@@ -7,7 +7,7 @@ import essence.packet.PacketReader;
 import essence.packet.game.LoginPacket;
 
 @EncodesPacket({ 16, 18 })
-public final class LoginPacketParser implements PacketEncoder<LoginPacket> {
+public final class LoginPacketEncoder implements PacketEncoder<LoginPacket> {
 
 	@Override
 	public LoginPacket encode(PacketMessage message) {

@@ -1,10 +1,10 @@
-package talisman.packet.rs317;
+package talisman.packet.rs317.encode;
 
 import essence.packet.PacketMessage;
 import essence.packet.PacketMessageEncoder;
 import essence.packet.PacketWriter;
 
-public final class RS317Encoder implements PacketMessageEncoder {
+public final class RS317PacketMessageEncoder implements PacketMessageEncoder {
 
 	@Override
 	public byte[] encode(PacketMessage message) {

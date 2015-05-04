@@ -1,10 +1,10 @@
-package talisman.packet.rs317;
+package talisman.packet.rs317.decode;
 
 import essence.packet.PacketMessage;
 import essence.packet.PacketMessageDecoder;
 import essence.packet.PacketReader;
 
-public final class RS317Decoder implements PacketMessageDecoder {
+public final class RS317PacketMessageDecoder implements PacketMessageDecoder {
 
 	@Override
 	public PacketMessage decode(byte[] data) {

@@ -1,4 +1,4 @@
-package talisman.packet.rs317.build;
+package talisman.packet.rs317.decode;
 
 import essence.packet.DecodesPacket;
 import essence.packet.PacketDecoder;
@@ -7,7 +7,7 @@ import essence.packet.PacketWriter;
 import essence.packet.game.HandshakeResponsePacket;
 
 @DecodesPacket(HandshakeResponsePacket.class)
-public final class HandshakeResponsePacketBuilder implements PacketDecoder<HandshakeResponsePacket> {
+public final class HandshakeResponsePacketDecoder implements PacketDecoder<HandshakeResponsePacket> {
 
 	@Override
 	public PacketMessage decode(HandshakeResponsePacket packet) {
