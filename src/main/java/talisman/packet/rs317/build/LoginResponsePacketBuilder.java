@@ -1,21 +1,21 @@
 package talisman.packet.rs317.build;
 
-import essence.packet.BuildsPacket;
-import essence.packet.PacketBuilder;
+import essence.packet.DecodesPacket;
+import essence.packet.PacketDecoder;
 import essence.packet.PacketMessage;
-import essence.packet.PacketOutputStream;
+import essence.packet.PacketWriter;
 import essence.packet.game.LoginResponsePacket;
 
-@BuildsPacket(LoginResponsePacket.class)
-public final class LoginResponsePacketBuilder implements PacketBuilder<LoginResponsePacket> {
+@DecodesPacket(LoginResponsePacket.class)
+public final class LoginResponsePacketBuilder implements PacketDecoder<LoginResponsePacket> {
 
 	@Override
-	public PacketMessage build(LoginResponsePacket packet) {
-		PacketOutputStream out = PacketOutputStream.get();
-		out.write(packet.getResponse());
-		out.write(packet.getUserStatus());
-		out.write(packet.isFlagged() ? 1 : 0);
-		return PacketMessage.headless(out);
+	public PacketMessage decode(LoginResponsePacket packet) {
+		PacketWriter writer = PacketWriter.get();
+		writer.write(packet.getResponse());
+		writer.write(packet.getUserStatus());
+		writer.write(packet.isFlagged() ? 1 : 0);
+		return PacketMessage.headless(writer);
 	}
 
 }

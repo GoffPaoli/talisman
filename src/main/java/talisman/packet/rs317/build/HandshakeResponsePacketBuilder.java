@@ -1,21 +1,21 @@
 package talisman.packet.rs317.build;
 
-import essence.packet.BuildsPacket;
-import essence.packet.PacketBuilder;
+import essence.packet.DecodesPacket;
+import essence.packet.PacketDecoder;
 import essence.packet.PacketMessage;
-import essence.packet.PacketOutputStream;
+import essence.packet.PacketWriter;
 import essence.packet.game.HandshakeResponsePacket;
 
-@BuildsPacket(HandshakeResponsePacket.class)
-public final class HandshakeResponsePacketBuilder implements PacketBuilder<HandshakeResponsePacket> {
+@DecodesPacket(HandshakeResponsePacket.class)
+public final class HandshakeResponsePacketBuilder implements PacketDecoder<HandshakeResponsePacket> {
 
 	@Override
-	public PacketMessage build(HandshakeResponsePacket packet) {
-		PacketOutputStream out = PacketOutputStream.get();
-		out.writeBytes(new byte[8]);
-		out.write(packet.getResponse());
-		out.writeLong(packet.getSessionKey());
-		return PacketMessage.headless(out);
+	public PacketMessage decode(HandshakeResponsePacket packet) {
+		PacketWriter writer = PacketWriter.get();
+		writer.writeBytes(new byte[8]);
+		writer.write(packet.getResponse());
+		writer.writeLong(packet.getSessionKey());
+		return PacketMessage.headless(writer);
 	}
 
 }

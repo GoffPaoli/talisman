@@ -1,17 +1,17 @@
 package talisman.packet.rs317.parse;
 
-import essence.packet.PacketInputStream;
+import essence.packet.EncodesPacket;
+import essence.packet.PacketEncoder;
 import essence.packet.PacketMessage;
-import essence.packet.PacketParser;
-import essence.packet.ParsesPacket;
+import essence.packet.PacketReader;
 import essence.packet.game.LoginPacket;
 
-@ParsesPacket({ 16, 18 })
-public final class LoginPacketParser implements PacketParser<LoginPacket> {
+@EncodesPacket({ 16, 18 })
+public final class LoginPacketParser implements PacketEncoder<LoginPacket> {
 
 	@Override
-	public LoginPacket parse(PacketMessage message) {
-		PacketInputStream in = PacketInputStream.get(message);
+	public LoginPacket encode(PacketMessage message) {
+		PacketReader in = PacketReader.get(message);
 
 		int magic = in.readUnsignedByte();
 		int clientVersion = in.readUnsignedShort();

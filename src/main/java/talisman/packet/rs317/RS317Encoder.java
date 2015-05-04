@@ -2,21 +2,21 @@ package talisman.packet.rs317;
 
 import essence.packet.PacketMessage;
 import essence.packet.PacketMessageEncoder;
-import essence.packet.PacketOutputStream;
+import essence.packet.PacketWriter;
 
 public final class RS317Encoder implements PacketMessageEncoder {
 
 	@Override
 	public byte[] encode(PacketMessage message) {
-		PacketOutputStream out = PacketOutputStream.get();
+		PacketWriter writer = PacketWriter.get();
 
 		if (!message.isHeadless())
-			out.writeByte(message.getID());
+			writer.writeByte(message.getID());
 		byte[] data = message.getData();
-		out.writeByte(data.length);
-		out.writeBytes(data);
+		writer.writeByte(data.length);
+		writer.writeBytes(data);
 
-		return out.toByteArray();
+		return writer.toByteArray();
 	}
 
 }
