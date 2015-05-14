@@ -1,16 +1,17 @@
 package talisman.packet.rs317.encode;
 
 import essence.packet.EncodesPacket;
+import essence.packet.PacketClient;
 import essence.packet.PacketEncoder;
 import essence.packet.PacketMessage;
 import essence.packet.PacketReader;
-import essence.packet.lobby.LoginPacket;
+import essence.packet.incoming.LoginPacket;
 
 @EncodesPacket({ 16, 18 })
 public final class LoginPacketEncoder implements PacketEncoder<LoginPacket> {
 
 	@Override
-	public LoginPacket encode(PacketMessage message) {
+	public LoginPacket encode(PacketClient client, PacketMessage message) {
 		PacketReader reader = PacketReader.get(message);
 
 		int magic = reader.readUnsignedByte();
@@ -32,8 +33,8 @@ public final class LoginPacketEncoder implements PacketEncoder<LoginPacket> {
 		String username = reader.readString();
 		String password = reader.readString();
 
-		return LoginPacket.get(magic, clientVersion, highDetail, fileChecksums, blockLength, blockID, sessionKeys,
-				uid, username, password);
+		return LoginPacket.get(client, magic, clientVersion, highDetail, fileChecksums, blockLength, blockID,
+				sessionKeys, uid, username, password);
 	}
 
 }

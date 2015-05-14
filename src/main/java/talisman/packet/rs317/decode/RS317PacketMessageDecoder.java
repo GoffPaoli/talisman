@@ -11,11 +11,38 @@ public final class RS317PacketMessageDecoder implements PacketMessageDecoder {
 		PacketReader reader = PacketReader.get(data);
 
 		int id = reader.readUnsignedByte();
-		int length = reader.available();
+		int length = getPacketLength(id, reader);
+
+		if (reader.available() < length)
+			return null;
+
 		byte[] packetData = new byte[length];
 		reader.read(packetData, 0, length);
 
 		return PacketMessage.get(packetData, id);
 	}
+
+	public static final int PACKET_SIZE_BYTE = -1;
+	public static final int PACKET_SIZE_SHORT = -2;
+
+	private static int getPacketLength(int id, PacketReader reader) {
+		if (id > sizes.length)
+			return Integer.MAX_VALUE;
+		int possibleLength = sizes[id];
+		if (possibleLength == PACKET_SIZE_BYTE)
+			return reader.readUnsignedByte();
+		if (possibleLength == PACKET_SIZE_SHORT)
+			return reader.readShort();
+		return possibleLength;
+	}
+
+	private static final int[] sizes = { 0, 0, 0, 1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 4, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, 6, 0 };
 
 }

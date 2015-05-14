@@ -8,25 +8,24 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import essence.game.World;
 import essence.inject.Inject;
-import essence.network.AbstractNetworkServer;
-import essence.packet.PacketMessage;
+import essence.inject.Injector;
+import essence.packet.PacketController;
 import essence.packet.PacketMessageDecoder;
 import essence.packet.PacketMessageEncoder;
+import essence.packet.PacketNetworkServer;
 
-final class NettyNetworkServer extends AbstractNetworkServer<PacketMessage> {
+final class NettyNetworkServer extends PacketNetworkServer<NettyNetworkClient> {
 
 	private final ServerBootstrap bootstrap = new ServerBootstrap();
-	
-	private final PacketMessageEncoder encoder;
-	private final PacketMessageDecoder decoder;
+
+	private final Injector injector;
 
 	@Inject
-	NettyNetworkServer(PacketMessageEncoder encoder, PacketMessageDecoder decoder) {
-		super(World.PLAYER_CAPACITY);
-		this.encoder = encoder;
-		this.decoder = decoder;
+	NettyNetworkServer(PacketController controller, PacketMessageEncoder encoder, PacketMessageDecoder decoder,
+			Injector injector) {
+		super(controller, encoder, decoder);
+		this.injector = injector;
 	}
 
 	@Override
@@ -36,16 +35,15 @@ final class NettyNetworkServer extends AbstractNetworkServer<PacketMessage> {
 
 		bootstrap.group(bossGroup, workerGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
-		bootstrap.option(ChannelOption.ALLOW_HALF_CLOSURE, true);
 		bootstrap.option(ChannelOption.TCP_NODELAY, true);
 		bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
 		bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			protected void initChannel(SocketChannel ch) {
 				ChannelPipeline p = ch.pipeline();
-				p.addLast("encoder", new NettyMessageEncoder(encoder));
-				p.addLast("decoder", new NettyMessageDecoder(decoder));
-				p.addLast("handler", new NettyChannelHandler());
+				p.addLast("encoder", new NettyMessageEncoder(getEncoder()));
+				p.addLast("decoder", new NettyMessageDecoder(getDecoder()));
+				p.addLast("handler", injector.getInstance(NettyChannelHandler.class));
 			}
 		});
 		bootstrap.bind(port);

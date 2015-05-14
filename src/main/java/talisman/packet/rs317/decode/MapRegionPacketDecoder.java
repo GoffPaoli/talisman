@@ -4,7 +4,7 @@ import essence.packet.DecodesPacket;
 import essence.packet.PacketDecoder;
 import essence.packet.PacketMessage;
 import essence.packet.PacketWriter;
-import essence.packet.game.MapRegionPacket;
+import essence.packet.outgoing.MapRegionPacket;
 
 @DecodesPacket(MapRegionPacket.class)
 public final class MapRegionPacketDecoder implements PacketDecoder<MapRegionPacket> {

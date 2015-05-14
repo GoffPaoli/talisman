@@ -6,6 +6,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
+import essence.packet.PacketMessage;
 import essence.packet.PacketMessageDecoder;
 
 final class NettyMessageDecoder extends ByteToMessageDecoder {
@@ -18,7 +19,11 @@ final class NettyMessageDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-		out.add(decoder.decode(in.array()));
+		byte[] data = new byte[in.readableBytes()];
+		in.readBytes(data);
+		PacketMessage message = decoder.decode(data);
+		if (message != null)
+			out.add(message);
 	}
 
 }
