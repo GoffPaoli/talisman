@@ -22,11 +22,11 @@ public final class RS317PacketMessageDecoder implements PacketMessageDecoder {
 		return PacketMessage.get(packetData, id);
 	}
 
-	public static final int PACKET_SIZE_BYTE = -1;
-	public static final int PACKET_SIZE_SHORT = -2;
+	private static final int PACKET_SIZE_BYTE = -1;
+	private static final int PACKET_SIZE_SHORT = -2;
 
 	private static int getPacketLength(int id, PacketReader reader) {
-		if (id > sizes.length)
+		if (id >= sizes.length)
 			return Integer.MAX_VALUE;
 		int possibleLength = sizes[id];
 		if (possibleLength == PACKET_SIZE_BYTE)

@@ -17,8 +17,8 @@ public final class RS317PacketMessageEncoder implements PacketMessageEncoder {
 		return writer.toByteArray();
 	}
 
-	public static final int PACKET_SIZE_BYTE = -1;
-	public static final int PACKET_SIZE_SHORT = -2;
+	private static final int PACKET_SIZE_BYTE = -1;
+	private static final int PACKET_SIZE_SHORT = -2;
 
 	private static void writeHeader(PacketMessage message, PacketWriter writer) {
 		int id = message.getID();

@@ -83,7 +83,6 @@ final class NetworkServer extends PacketNetworkServer<NetworkClient> {
 			@Override
 			public void failed(Throwable exc, Object attachment) {
 				removeClient(client);
-				exc.printStackTrace();
 			}
 		});
 	}
